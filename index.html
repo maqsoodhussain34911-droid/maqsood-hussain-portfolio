@@ -1,0 +1,790 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maqsood Hussain — AI & Software Developer Portfolio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.8/index.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.0.8/index.min.css">
+<style>
+  * { font-family: 'Inter', sans-serif; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  html { scroll-behavior: smooth; }
+  body { background: #0a0a0f; color: #e5e7eb; overflow-x: hidden; }
+  .bg-gradient-orb { position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.4; z-index: 0; pointer-events: none; }
+  .orb-1 { width: 500px; height: 500px; background: #7c3aed; top: -200px; left: -100px; animation: float 12s ease-in-out infinite; }
+  .orb-2 { width: 400px; height: 400px; background: #06b6d4; bottom: -150px; right: -100px; animation: float 16s ease-in-out infinite reverse; }
+  .orb-3 { width: 350px; height: 350px; background: #ec4899; top: 40%; left: 50%; animation: float 20s ease-in-out infinite; }
+  @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(60px, -40px); } }
+  .gradient-text { background: linear-gradient(135deg, #a78bfa 0%, #06b6d4 50%, #f472b6 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+  .glass-hover:hover { background: rgba(255, 255, 255, 0.06); border-color: rgba(167, 139, 250, 0.3); transform: translateY(-4px); }
+  .project-card, .cert-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  .project-card:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 25px 60px -20px rgba(124, 58, 237, 0.4); }
+  .project-card:hover .project-img, .cert-card:hover .cert-img { transform: scale(1.08); }
+  .project-img, .cert-img { transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+  .cert-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 50px -15px rgba(236, 72, 153, 0.4); border-color: rgba(236, 72, 153, 0.4); }
+  .skill-chip { background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(6, 182, 212, 0.15)); border: 1px solid rgba(167, 139, 250, 0.2); transition: all 0.3s; }
+  .skill-chip:hover { background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(6, 182, 212, 0.3)); border-color: rgba(167, 139, 250, 0.5); transform: translateY(-2px); }
+  .nav-link { position: relative; }
+  .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, #a78bfa, #06b6d4); transition: width 0.3s; }
+  .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+  .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .timeline-line { background: linear-gradient(180deg, #7c3aed 0%, #06b6d4 100%); }
+  .timeline-dot { background: radial-gradient(circle, #a78bfa 0%, transparent 70%); box-shadow: 0 0 20px #7c3aed; }
+  .btn-primary { background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%); transition: all 0.3s; position: relative; overflow: hidden; }
+  .btn-primary::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s; }
+  .btn-primary:hover::before { left: 100%; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.6); }
+  .btn-outline { border: 1px solid rgba(167, 139, 250, 0.4); transition: all 0.3s; }
+  .btn-outline:hover { border-color: #a78bfa; background: rgba(124, 58, 237, 0.1); }
+  .btn-cv { background: linear-gradient(135deg, #ec4899 0%, #f59e0b 100%); transition: all 0.3s; position: relative; overflow: hidden; }
+  .btn-cv::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s; }
+  .btn-cv:hover::before { left: 100%; }
+  .btn-cv:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(236, 72, 153, 0.6); }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #0a0a0f; }
+  ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #7c3aed, #06b6d4); border-radius: 5px; }
+  .tag { display: inline-flex; padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; font-weight: 500; background: rgba(6, 182, 212, 0.15); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.3); }
+  .section-title { display: inline-block; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.2em; color: #a78bfa; text-transform: uppercase; padding-bottom: 8px; border-bottom: 2px solid rgba(167, 139, 250, 0.3); margin-bottom: 12px; }
+  .hamburger-line { transition: all 0.3s; }
+  .menu-open .hamburger-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .menu-open .hamburger-line:nth-child(2) { opacity: 0; }
+  .menu-open .hamburger-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+  .language-bar { background: linear-gradient(90deg, #7c3aed, #06b6d4); height: 6px; border-radius: 3px; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+  .cert-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(10, 10, 15, 0.95) 100%); opacity: 0; transition: opacity 0.4s; display: flex; align-items: flex-end; padding: 1.5rem; }
+  .cert-card:hover .cert-overlay { opacity: 1; }
+  .lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px); z-index: 100; display: none; align-items: center; justify-content: center; padding: 2rem; animation: fadeIn 0.3s ease; }
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 12px; box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+  .lightbox-close { position: absolute; top: 2rem; right: 2rem; width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 1.5rem; cursor: pointer; transition: all 0.3s; }
+  .lightbox-close:hover { background: rgba(236, 72, 153, 0.3); transform: rotate(90deg); }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  
+  /* CV Preview Card Styles */
+  .cv-preview { background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); border: 1px solid rgba(167, 139, 250, 0.15); }
+  .cv-section-title { color: #a78bfa; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; padding-bottom: 6px; border-bottom: 1px solid rgba(167, 139, 250, 0.25); margin-bottom: 12px; }
+  .cv-bullet { position: relative; padding-left: 18px; }
+  .cv-bullet::before { content: '▸'; position: absolute; left: 0; color: #06b6d4; font-weight: bold; }
+  .cv-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(167,139,250,0.3), transparent); margin: 16px 0; }
+  
+  /* Pulse animation for download button */
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7); }
+    70% { box-shadow: 0 0 0 12px rgba(236, 72, 153, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0); }
+  }
+  .pulse-btn { animation: pulse-ring 2s infinite; }
+  
+  /* Toast notification */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: linear-gradient(135deg, #7c3aed, #06b6d4);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.5);
+    transform: translateY(200px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 500;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="bg-gradient-orb orb-1"></div>
+<div class="bg-gradient-orb orb-2"></div>
+<div class="bg-gradient-orb orb-3"></div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast">
+  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+  <span id="toastMessage">Success!</span>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightboxImg" src="" alt="" />
+</div>
+
+<!-- Navigation -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 glass">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#home" class="flex items-center gap-2 group">
+      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center font-bold text-white">M</div>
+      <span class="font-bold text-lg">Maqsood<span class="gradient-text">.</span></span>
+    </a>
+    <div id="desktopNav" class="hidden md:flex items-center gap-7">
+      <a href="#home" class="nav-link text-sm font-medium">Home</a>
+      <a href="#about" class="nav-link text-sm font-medium">About</a>
+      <a href="#skills" class="nav-link text-sm font-medium">Skills</a>
+      <a href="#projects" class="nav-link text-sm font-medium">Projects</a>
+      <a href="#cv-preview" class="nav-link text-sm font-medium">CV</a>
+      <a href="#contact" class="nav-link text-sm font-medium">Contact</a>
+      <button onclick="downloadCV()" class="btn-cv px-4 py-2 rounded-full text-sm font-semibold text-white flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        CV
+      </button>
+    </div>
+    <button id="menuBtn" class="md:hidden flex flex-col gap-1.5 p-2">
+      <span class="hamburger-line w-6 h-0.5 bg-white"></span>
+      <span class="hamburger-line w-6 h-0.5 bg-white"></span>
+      <span class="hamburger-line w-6 h-0.5 bg-white"></span>
+    </button>
+  </div>
+  <div id="mobileMenu" class="md:hidden hidden border-t border-white/5 glass">
+    <div class="px-6 py-4 flex flex-col gap-4">
+      <a href="#home" class="py-2">Home</a>
+      <a href="#about" class="py-2">About</a>
+      <a href="#skills" class="py-2">Skills</a>
+      <a href="#projects" class="py-2">Projects</a>
+      <a href="#cv-preview" class="py-2">CV Preview</a>
+      <a href="#contact" class="py-2">Contact</a>
+      <button onclick="downloadCV()" class="btn-cv px-5 py-3 rounded-full font-semibold text-white flex items-center justify-center gap-2 mt-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Download CV
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="home" class="relative min-h-screen flex items-center justify-center px-6 pt-24 pb-16">
+  <div class="max-w-6xl mx-auto text-center relative z-10">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass mb-8 fade-in">
+      <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+      <span class="text-sm">Available for Internship & Entry-level Roles</span>
+    </div>
+    <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 fade-in leading-tight">
+      Hi, I'm <span class="gradient-text">Maqsood</span><br>
+      <span class="text-3xl md:text-5xl lg:text-6xl font-semibold">Hussain</span>
+    </h1>
+    <p class="text-xl md:text-2xl text-gray-400 mb-4 fade-in mono">&lt; AI Engineer /&gt;</p>
+    <p class="max-w-2xl mx-auto text-gray-400 mb-10 fade-in leading-relaxed">
+      Artificial Intelligence undergraduate with hands-on experience in software development,
+      web development, and applied programming. Passionate about building data-driven solutions.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in flex-wrap">
+      <a href="#projects" class="btn-primary px-8 py-3 rounded-full font-semibold flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        View Projects
+      </a>
+      <button onclick="downloadCV()" class="btn-cv px-8 py-3 rounded-full font-semibold text-white flex items-center justify-center gap-2 pulse-btn">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Download CV
+      </button>
+      <a href="#contact" class="btn-outline px-8 py-3 rounded-full font-semibold">Get In Touch</a>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto">
+      <div class="glass rounded-2xl p-6 fade-in">
+        <div class="text-3xl font-bold gradient-text">3.44</div>
+        <div class="text-sm text-gray-400 mt-1">CGPA / 4.00</div>
+      </div>
+      <div class="glass rounded-2xl p-6 fade-in">
+        <div class="text-3xl font-bold gradient-text">8+</div>
+        <div class="text-sm text-gray-400 mt-1">Projects</div>
+      </div>
+      <div class="glass rounded-2xl p-6 fade-in">
+        <div class="text-3xl font-bold gradient-text">7+</div>
+        <div class="text-sm text-gray-400 mt-1">Technologies</div>
+      </div>
+      <div class="glass rounded-2xl p-6 fade-in">
+        <div class="text-3xl font-bold gradient-text">4</div>
+        <div class="text-sm text-gray-400 mt-1">Languages</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="relative py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 fade-in">
+      <div class="section-title">About Me</div>
+      <h2 class="text-4xl md:text-5xl font-bold">Passionate about <span class="gradient-text">AI & Code</span></h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div class="fade-in">
+        <div class="relative">
+          <div class="absolute inset-0 bg-gradient-to-br from-violet-500 to-cyan-500 rounded-3xl blur-2xl opacity-30"></div>
+          <div class="relative glass rounded-3xl p-8">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-3 h-3 rounded-full bg-red-500"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div class="w-3 h-3 rounded-full bg-green-500"></div>
+              <span class="text-xs text-gray-400 ml-4 mono">about.sh</span>
+            </div>
+            <pre class="mono text-sm text-gray-300 whitespace-pre-wrap"><span class="text-violet-400">const</span> <span class="text-cyan-400">maqsood</span> = {
+  <span class="text-green-400">name</span>: <span class="text-amber-300">"Maqsood Hussain"</span>,
+  <span class="text-green-400">role</span>: <span class="text-amber-300">"AI Student"</span>,
+  <span class="text-green-400">location</span>: <span class="text-amber-300">"Ghotki, Sindh"</span>,
+  <span class="text-green-400">focus</span>: [
+    <span class="text-amber-300">"Artificial Intelligence"</span>,
+    <span class="text-amber-300">"Software Development"</span>,
+    <span class="text-amber-300">"Web Development"</span>
+  ],
+  <span class="text-green-400">cgpa</span>: <span class="text-pink-400">3.44</span>,
+  <span class="text-green-400">status</span>: <span class="text-amber-300">"Open to work"</span>
+};</pre>
+          </div>
+        </div>
+      </div>
+      <div class="fade-in space-y-6">
+        <p class="text-gray-300 leading-relaxed">
+          I'm an Artificial Intelligence undergraduate student at <span class="text-cyan-400 font-semibold">Aror University of Art, Architecture, Design & Heritage, Rohri</span>, currently in my 4th semester. I love turning complex problems into elegant, efficient solutions.
+        </p>
+        <p class="text-gray-300 leading-relaxed">
+          My expertise spans from building desktop GUI applications and database systems to crafting responsive websites and network tools. I'm deeply passionate about Machine Learning, OpenCV, and data-driven problem solving.
+        </p>
+        <div class="pt-4">
+          <button onclick="downloadCV()" class="btn-cv px-8 py-3 rounded-full font-semibold text-white flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            Download Full CV (PDF)
+          </button>
+          <p class="text-xs text-gray-500 mt-3">📄 Includes education, skills, projects & more</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Education Section -->
+<section id="education" class="relative py-24 px-6">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16 fade-in">
+      <div class="section-title">Education</div>
+      <h2 class="text-4xl md:text-5xl font-bold">My Academic <span class="gradient-text">Journey</span></h2>
+    </div>
+    <div class="relative fade-in">
+      <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 timeline-line md:-translate-x-1/2"></div>
+      <div class="space-y-12">
+        <div class="relative flex flex-col md:flex-row items-start md:items-center">
+          <div class="absolute left-8 md:left-1/2 w-4 h-4 rounded-full timeline-dot md:-translate-x-1/2 -translate-x-1/2"></div>
+          <div class="md:w-1/2 md:pr-12 md:text-right ml-16 md:ml-0">
+            <div class="glass rounded-2xl p-6 glass-hover">
+              <div class="tag mb-3">2024 – Present</div>
+              <h3 class="text-xl font-bold mb-2">BS Artificial Intelligence</h3>
+              <p class="text-gray-400 text-sm mb-3">Aror University of Art, Architecture, Design & Heritage, Rohri</p>
+              <div class="flex flex-wrap gap-2 md:justify-end">
+                <span class="tag">4th Semester</span>
+                <span class="tag">CGPA: 3.44/4.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="relative py-24 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16 fade-in">
+      <div class="section-title">Skills</div>
+      <h2 class="text-4xl md:text-5xl font-bold">My <span class="gradient-text">Tech Stack</span></h2>
+    </div>
+    <div id="skillsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="relative py-24 px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16 fade-in">
+      <div class="section-title">Projects</div>
+      <h2 class="text-4xl md:text-5xl font-bold">Featured <span class="gradient-text">Work</span></h2>
+    </div>
+    <div id="projectsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </div>
+</section>
+
+<!-- CV Preview + Download Section -->
+<section id="cv-preview" class="relative py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16 fade-in">
+      <div class="section-title">Curriculum Vitae</div>
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">My <span class="gradient-text">Resume</span></h2>
+      <p class="text-gray-400 max-w-2xl mx-auto">Quick preview of my professional profile. Download the full PDF for details.</p>
+    </div>
+    
+    <!-- Download CTA Card -->
+    <div class="glass rounded-3xl p-8 md:p-12 mb-10 text-center fade-in relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-amber-500/10"></div>
+      <div class="relative">
+        <div class="inline-flex w-20 h-20 rounded-2xl bg-gradient-to-br from-pink-500 to-amber-500 items-center justify-center mb-6">
+          <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <h3 class="text-2xl md:text-3xl font-bold mb-3">Want my full CV?</h3>
+        <p class="text-gray-400 mb-6 max-w-lg mx-auto">Get a professionally formatted PDF with all my education, skills, projects, and contact information.</p>
+        <button onclick="downloadCV()" class="btn-cv px-8 py-4 rounded-full font-semibold text-white inline-flex items-center gap-3 text-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Download CV as PDF
+        </button>
+        <p class="text-xs text-gray-500 mt-4">📁 File: Maqsood_Hussain_CV.pdf</p>
+      </div>
+    </div>
+
+    <!-- CV Preview -->
+    <div class="cv-preview rounded-3xl p-8 md:p-12 fade-in">
+      <!-- Header -->
+      <div class="text-center pb-6 border-b border-white/10">
+        <h3 class="text-3xl md:text-4xl font-bold gradient-text mb-2">MAQSOOD HUSSAIN</h3>
+        <p class="text-sm text-gray-400 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+          <span>📍 Ghotki, Sindh</span>
+          <span>📞 +92 327-3034192</span>
+          <span>✉️ MaqsoodHussain34911@gmail.com</span>
+        </p>
+        <p class="text-xs text-gray-500 mt-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+          <span>GitHub: maqsoodhussain34911</span>
+          <span>•</span>
+          <span>LinkedIn: Maqsood Hussain</span>
+        </p>
+      </div>
+
+      <!-- Summary -->
+      <div class="mt-6">
+        <div class="cv-section-title">Professional Summary</div>
+        <p class="text-sm text-gray-300 leading-relaxed">Artificial Intelligence undergraduate with hands-on experience in software development, web development, and applied programming. Skilled in building desktop applications, database systems, and networking tools. Strong foundation in Python, C++, Java, web technologies, and data-driven problem solving.</p>
+      </div>
+
+      <!-- Education -->
+      <div class="mt-6">
+        <div class="cv-section-title">Education</div>
+        <div class="flex justify-between flex-wrap gap-2">
+          <div>
+            <div class="font-semibold">BS Artificial Intelligence</div>
+            <div class="text-sm text-gray-400">Aror University of Art, Architecture, Design & Heritage, Rohri</div>
+          </div>
+          <div class="text-sm text-cyan-400 font-semibold">2024 – Present</div>
+        </div>
+        <div class="text-sm text-gray-300 mt-1">CGPA: 3.44 / 4.00 • 4th Semester (Current)</div>
+      </div>
+
+      <!-- Skills -->
+      <div class="mt-6">
+        <div class="cv-section-title">Skills</div>
+        <div class="grid md:grid-cols-2 gap-3 text-sm">
+          <div><span class="text-cyan-400 font-semibold">Programming:</span> <span class="text-gray-300">Python, C++, C, Java, HTML, CSS, JavaScript, Shell</span></div>
+          <div><span class="text-cyan-400 font-semibold">AI / ML:</span> <span class="text-gray-300">Machine Learning, OpenCV, DSA</span></div>
+          <div><span class="text-cyan-400 font-semibold">Database:</span> <span class="text-gray-300">SQL, MySQL, MongoDB</span></div>
+          <div><span class="text-cyan-400 font-semibold">Tools:</span> <span class="text-gray-300">Git, Linux, NumPy, Pandas, Scikit-learn</span></div>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="mt-6">
+        <div class="cv-section-title">Key Projects</div>
+        <div class="space-y-3 text-sm">
+          <div>
+            <div class="flex justify-between flex-wrap">
+              <span class="font-semibold text-white">UrPic Art — AI Image to Pencil Sketch</span>
+              <span class="text-xs text-gray-500">Python, Streamlit, OpenCV</span>
+            </div>
+            <div class="text-gray-400 cv-bullet">Converts images to pencil sketches using OpenAI API and OpenCV with comparison slider.</div>
+          </div>
+          <div>
+            <div class="flex justify-between flex-wrap">
+              <span class="font-semibold text-white">Hostname and DNS Lookup Utility</span>
+              <span class="text-xs text-gray-500">Bash, Linux</span>
+            </div>
+            <div class="text-gray-400 cv-bullet">Complete DNS and network toolkit using built-in Linux commands.</div>
+          </div>
+          <div>
+            <div class="flex justify-between flex-wrap">
+              <span class="font-semibold text-white">Banquets Management System (GUI)</span>
+              <span class="text-xs text-gray-500">Desktop App</span>
+            </div>
+            <div class="text-gray-400 cv-bullet">Full CRUD hall booking management with graphical interface.</div>
+          </div>
+          <div>
+            <div class="flex justify-between flex-wrap">
+              <span class="font-semibold text-white">Network Anomaly Detection</span>
+              <span class="text-xs text-gray-500">Python, Packet Tracer</span>
+            </div>
+            <div class="text-gray-400 cv-bullet">Network traffic anomaly detection with Python GUI.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Languages -->
+      <div class="mt-6">
+        <div class="cv-section-title">Languages</div>
+        <div class="text-sm text-gray-300">Urdu (Fluent) • English (Proficient) • Sindhi (Fluent) • Seraiki (Fluent)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="relative py-24 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16 fade-in">
+      <div class="section-title">Contact</div>
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">Let's Work <span class="gradient-text">Together</span></h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6 fade-in">
+      <a href="mailto:MaqsoodHussain34911@gmail.com" class="glass rounded-2xl p-8 glass-hover group">
+        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Email</h3>
+        <p class="text-gray-400 text-sm break-all">MaqsoodHussain34911@gmail.com</p>
+      </a>
+      <a href="tel:+923273034192" class="glass rounded-2xl p-8 glass-hover group">
+        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Phone</h3>
+        <p class="text-gray-400 text-sm">+92 327-3034192</p>
+      </a>
+      <a href="https://github.com/maqsoodhussain34911" target="_blank" class="glass rounded-2xl p-8 glass-hover group">
+        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        </div>
+        <h3 class="text-xl font-bold mb-2">GitHub</h3>
+        <p class="text-gray-400 text-sm">maqsoodhussain34911</p>
+      </a>
+      <a href="https://linkedin.com/in/maqsood-hussain-32867b336" target="_blank" class="glass rounded-2xl p-8 glass-hover group">
+        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-500 to-cyan-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+          <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </div>
+        <h3 class="text-xl font-bold mb-2">LinkedIn</h3>
+        <p class="text-gray-400 text-sm">Maqsood Hussain</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="relative py-8 px-6 border-t border-white/5">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="text-sm text-gray-400">© 2026 Maqsood Hussain. All rights reserved.</div>
+    <button onclick="downloadCV()" class="text-sm text-cyan-400 hover:text-cyan-300 font-medium flex items-center gap-2 transition">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+      Download CV
+    </button>
+  </div>
+</footer>
+
+<script>
+const portfolioData = {
+  skills: [
+    { title: "Programming", icon: "💻", color: "from-violet-500 to-purple-500", items: ["Python", "C++", "C Language", "Java", "HTML", "CSS", "JavaScript", "Shell/Bash"] },
+    { title: "AI & Machine Learning", icon: "🤖", color: "from-cyan-500 to-blue-500", items: ["Machine Learning", "OpenCV", "Data Structures", "Algorithms", "NumPy", "Pandas", "Scikit-learn", "Matplotlib"] },
+    { title: "Database & Backend", icon: "🗄️", color: "from-pink-500 to-rose-500", items: ["SQL", "MySQL", "MongoDB", "Relational Database Design"] },
+    { title: "Web Development", icon: "🌐", color: "from-amber-500 to-orange-500", items: ["HTML", "CSS", "JavaScript", "Responsive Design", "Streamlit"] },
+    { title: "Mathematics", icon: "📐", color: "from-green-500 to-emerald-500", items: ["Linear Algebra", "Calculus", "Multivariable Calculus", "Probability", "Statistics"] },
+    { title: "Tools & Platforms", icon: "🛠️", color: "from-indigo-500 to-violet-500", items: ["Git", "GitHub", "Linux", "MS Office", "Packet Tracer", "MySQL Workbench"] }
+  ],
+  projects: [
+    { title: "UrPic Art", subtitle: "AI Image to Pencil Sketch", description: "Python web app with Streamlit that converts images into pencil sketches using OpenAI API and OpenCV.", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop", tags: ["Python", "Streamlit", "OpenCV"], link: "https://github.com/maqsoodhussain34911-droid/urpic-art" },
+    { title: "DNS Lookup Utility", subtitle: "Network Toolkit", description: "Bash shell script for complete DNS and network lookup from Linux terminal.", image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop", tags: ["Bash", "Linux"], link: "https://github.com/maqsoodhussain34911-droid/Hostname-DNS-Lookup" },
+    { title: "Banquets Management", subtitle: "Desktop GUI App", description: "Desktop GUI for managing hall bookings with full CRUD operations.", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600&h=400&fit=crop", tags: ["GUI", "CRUD"] },
+    { title: "Airline Management", subtitle: "Flight System", description: "C++ based flight booking system with OOP concepts.", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&h=400&fit=crop", tags: ["C++", "OOP"] },
+    { title: "Motorbike Website", subtitle: "Responsive Design", description: "Static responsive website using HTML, CSS, and JavaScript.", image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&h=400&fit=crop", tags: ["HTML", "CSS", "JS"] },
+    { title: "Java Notepad", subtitle: "Text Editor", description: "Simple text editor in Java with open, edit, and save features.", image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=600&h=400&fit=crop", tags: ["Java", "Swing"] },
+    { title: "School Management DB", subtitle: "Database", description: "Relational database for school using MySQL Workbench.", image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=400&fit=crop", tags: ["MySQL", "SQL"] },
+    { title: "Network Anomaly Detection", subtitle: "Security", description: "Network traffic anomaly detection with Python GUI and Packet Tracer.", image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop", tags: ["Python", "Networking"] }
+  ],
+  languages: [
+    { name: "Urdu", level: 100, proficiency: "Fluent" },
+    { name: "English", level: 90, proficiency: "Proficient" },
+    { name: "Sindhi", level: 100, proficiency: "Fluent" },
+    { name: "Seraiki", level: 100, proficiency: "Fluent" }
+  ]
+};
+
+/* ============================================================
+   CV DOWNLOAD FUNCTION (PDF GENERATOR)
+   ============================================================ */
+function downloadCV() {
+  showToast('✨ Generating your CV...');
+  
+  setTimeout(() => {
+    try {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+      const pageWidth = 210;
+      const margin = 18;
+      const contentWidth = pageWidth - margin * 2;
+      let y = 20;
+
+      // Helper functions
+      const checkPage = (needed) => {
+        if (y + needed > 280) { doc.addPage(); y = 20; }
+      };
+
+      const addSectionTitle = (title) => {
+        checkPage(15);
+        y += 4;
+        doc.setDrawColor(124, 58, 237);
+        doc.setLineWidth(0.5);
+        doc.line(margin, y, margin + contentWidth, y);
+        y += 5;
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.setTextColor(124, 58, 237);
+        doc.text(title.toUpperCase(), margin, y);
+        y += 6;
+        doc.setTextColor(40, 40, 40);
+      };
+
+      const addBullet = (text, indent = 0) => {
+        checkPage(6);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(60, 60, 60);
+        doc.text('▸', margin + indent, y);
+        const lines = doc.splitTextToSize(text, contentWidth - indent - 4);
+        doc.text(lines, margin + indent + 4, y);
+        y += lines.length * 5;
+      };
+
+      // ============ HEADER ============
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(24);
+      doc.setTextColor(30, 30, 30);
+      doc.text('MAQSOOD HUSSAIN', pageWidth / 2, y, { align: 'center' });
+      y += 6;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(11);
+      doc.setTextColor(124, 58, 237);
+      doc.text('Artificial Intelligence Engineer', pageWidth / 2, y, { align: 'center' });
+      y += 8;
+      doc.setFontSize(9);
+      doc.setTextColor(80, 80, 80);
+      doc.text('Ghotki, Sindh  |  +92 327-3034192  |  MaqsoodHussain34911@gmail.com', pageWidth / 2, y, { align: 'center' });
+      y += 4;
+      doc.text('GitHub: maqsoodhussain34911  |  LinkedIn: Maqsood Hussain', pageWidth / 2, y, { align: 'center' });
+      y += 3;
+
+      // ============ SUMMARY ============
+      addSectionTitle('Professional Summary');
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(50, 50, 50);
+      const summary = 'Artificial Intelligence undergraduate with hands-on experience in software development, web development, and applied programming. Skilled in building desktop applications, database systems, and networking tools. Strong foundation in Python, C++, Java, web technologies, and data-driven problem solving. Seeking internship and entry-level opportunities.';
+      const summaryLines = doc.splitTextToSize(summary, contentWidth);
+      doc.text(summaryLines, margin, y);
+      y += summaryLines.length * 5;
+
+      // ============ EDUCATION ============
+      addSectionTitle('Education');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.setTextColor(30, 30, 30);
+      doc.text('BS Artificial Intelligence', margin, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(124, 58, 237);
+      doc.text('2024 - Present', pageWidth - margin, y, { align: 'right' });
+      y += 5;
+      doc.setFontSize(10);
+      doc.setTextColor(80, 80, 80);
+      doc.text('Aror University of Art, Architecture, Design & Heritage, Rohri', margin, y);
+      y += 5;
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(50, 50, 50);
+      doc.text('CGPA: 3.44 / 4.00', margin, y);
+      doc.setFont('helvetica', 'normal');
+      doc.text('  •  4th Semester (Current)', margin + 28, y);
+      y += 5;
+
+      // ============ SKILLS ============
+      addSectionTitle('Technical Skills');
+      const skills = [
+        ['Programming', 'Python, C++, C Language, Java, HTML, CSS, JavaScript, Shell/Bash'],
+        ['AI & Machine Learning', 'Machine Learning Fundamentals, OpenCV, Data Structures & Algorithms'],
+        ['Database & Backend', 'SQL, MySQL, MongoDB, Relational Database Design'],
+        ['Web Development', 'HTML, CSS, JavaScript, Responsive Design, Streamlit'],
+        ['Mathematics', 'Linear Algebra, Calculus, Multivariable Calculus, Probability & Statistics'],
+        ['Tools & Platforms', 'Git, GitHub, Linux, MS Office, Packet Tracer, MySQL Workbench, NumPy, Pandas, Scikit-learn, Matplotlib'],
+        ['Professional', 'Problem Solving, Analytical Thinking, Teamwork, Communication']
+      ];
+      skills.forEach(([cat, items]) => {
+        checkPage(6);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(30, 30, 30);
+        const catText = cat + ': ';
+        doc.text(catText, margin, y);
+        const catWidth = doc.getTextWidth(catText);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(60, 60, 60);
+        const lines = doc.splitTextToSize(items, contentWidth - catWidth);
+        doc.text(lines[0], margin + catWidth, y);
+        if (lines.length > 1) {
+          doc.text(lines.slice(1), margin, y + 5);
+          y += (lines.length - 1) * 5;
+        }
+        y += 6;
+      });
+
+      // ============ PROJECTS ============
+      addSectionTitle('Projects');
+      const projects = [
+        { name: 'UrPic Art — AI Image to Pencil Sketch', tech: 'Python, Streamlit, OpenCV, OpenAI', desc: 'Web app that converts images into pencil sketches with before/after comparison slider and result download.' },
+        { name: 'Hostname and DNS Lookup Utility', tech: 'Bash, Linux', desc: 'Complete DNS and network lookup toolkit from Linux terminal using built-in commands.' },
+        { name: 'Banquets Management System (GUI)', tech: 'Desktop Application', desc: 'Desktop GUI for managing hall bookings with full CRUD operations and user-friendly interface.' },
+        { name: 'Airline Management System', tech: 'C++, OOP', desc: 'Flight booking system demonstrating OOP concepts and structured data management.' },
+        { name: 'Motorbike Website', tech: 'HTML, CSS, JavaScript', desc: 'Responsive static website with clean layout showcasing motorbike features.' },
+        { name: 'Java Notepad Application', tech: 'Java, Swing', desc: 'Simple text editor supporting open, edit, and save file operations.' },
+        { name: 'School Management Database', tech: 'MySQL, SQL', desc: 'Relational database for school management with structured tables and queries.' },
+        { name: 'Network Anomaly Detection', tech: 'Python, Packet Tracer', desc: 'Network traffic anomaly detection with Python GUI and Packet Tracer simulation.' }
+      ];
+      projects.forEach(p => {
+        checkPage(15);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(10.5);
+        doc.setTextColor(30, 30, 30);
+        doc.text(p.name, margin, y);
+        doc.setFont('helvetica', 'italic');
+        doc.setFontSize(9);
+        doc.setTextColor(124, 58, 237);
+        doc.text(p.tech, pageWidth - margin, y, { align: 'right' });
+        y += 4;
+        addBullet(p.desc, 0);
+        y += 2;
+      });
+
+      // ============ LANGUAGES ============
+      addSectionTitle('Languages');
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(50, 50, 50);
+      doc.text('Urdu (Fluent)  •  English (Proficient)  •  Sindhi (Fluent)  •  Seraiki (Fluent)', margin, y);
+      y += 10;
+
+      // ============ FOOTER ============
+      checkPage(20);
+      doc.setDrawColor(124, 58, 237);
+      doc.setLineWidth(0.3);
+      doc.line(margin, y, margin + contentWidth, y);
+      y += 5;
+      doc.setFontSize(8);
+      doc.setTextColor(120, 120, 120);
+      doc.text('This CV was generated from my portfolio — maqsoodhussain.dev', pageWidth / 2, y, { align: 'center' });
+
+      // Save
+      doc.save('Maqsood_Hussain_CV.pdf');
+      showToast('✅ CV downloaded successfully!');
+    } catch (err) {
+      console.error(err);
+      showToast('⚠️ Error generating CV. Please try again.');
+    }
+  }, 400);
+}
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMessage').textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+/* ============================================================
+   RENDERING LOGIC
+   ============================================================ */
+function renderSkills() {
+  const container = document.getElementById('skillsContainer');
+  container.innerHTML = portfolioData.skills.map((skill, i) => `
+    <div class="glass rounded-2xl p-6 glass-hover fade-in" style="transition-delay: ${i * 50}ms">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-12 h-12 rounded-xl bg-gradient-to-br ${skill.color} flex items-center justify-center text-2xl">${skill.icon}</div>
+        <h3 class="text-lg font-bold">${skill.title}</h3>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        ${skill.items.map(item => `<span class="skill-chip px-3 py-1.5 rounded-full text-xs font-medium">${item}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderProjects() {
+  const container = document.getElementById('projectsContainer');
+  container.innerHTML = portfolioData.projects.map((project, i) => `
+    <div class="project-card glass rounded-2xl overflow-hidden fade-in" style="transition-delay: ${i * 50}ms">
+      <div class="relative overflow-hidden h-48">
+        <img src="${project.image}" alt="${project.title}" class="project-img w-full h-full object-cover" loading="lazy"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+        <div class="absolute top-3 right-3 flex gap-1">${project.tags.slice(0, 2).map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+      <div class="p-6">
+        <div class="text-xs text-cyan-400 font-semibold mb-1 uppercase tracking-wider">${project.subtitle}</div>
+        <h3 class="text-xl font-bold mb-3">${project.title}</h3>
+        <p class="text-sm text-gray-400 leading-relaxed mb-4">${project.description}</p>
+        ${project.link ? `<a href="${project.link}" target="_blank" class="inline-flex items-center gap-2 text-sm font-semibold text-cyan-400 hover:text-cyan-300">View Project <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('lightbox').addEventListener('click', (e) => { if (e.target.id === 'lightbox') closeLightbox(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+function setupAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+}
+
+function setupNavHighlight() {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${entry.target.id}`) link.classList.add('active');
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(section => observer.observe(section));
+}
+
+document.getElementById('menuBtn').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('hidden');
+  document.getElementById('menuBtn').classList.toggle('menu-open');
+});
+document.querySelectorAll('#mobileMenu a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.add('hidden');
+    document.getElementById('menuBtn').classList.remove('menu-open');
+  });
+});
+
+// Init
+renderSkills();
+renderProjects();
+window.addEventListener('load', () => { setupAnimations(); setupNavHighlight(); });
+</script>
+
+</body>
+</html>
